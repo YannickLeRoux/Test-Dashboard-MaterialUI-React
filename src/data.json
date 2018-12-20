@@ -1,0 +1,28 @@
+{
+  "events": [
+    {
+      "timestamp": 1,
+      "peak_p_max_kw": 387.9
+    },
+    {
+      "timestamp": 2,
+      "peak_p_max_kw": 287.9
+    },
+    {
+      "timestamp": 3,
+      "peak_p_max_kw": 347.9
+    },
+    {
+      "timestamp": 4,
+      "peak_p_max_kw": 487.9
+    },
+    {
+      "timestamp": 5,
+      "peak_p_max_kw": 187.9
+    },
+    {
+      "timestamp": 6,
+      "peak_p_max_kw": 587.9
+    }
+  ]
+}
