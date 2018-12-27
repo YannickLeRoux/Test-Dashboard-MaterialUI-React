@@ -11,9 +11,9 @@ import { withStyles } from '@material-ui/core/styles'
 
 import jsonData from '../data.json';
 
-const styles = theme => ({
+const styles = (theme) => ({
   paper: {
-    margin: 20
+    margin: 50
   }
 });
 
@@ -33,9 +33,9 @@ class TableWrapper extends Component {
   }
 
   renderTableRows() {
-    return this.state.tableData.map( row => {
+    return this.state.tableData.map( (row, index) => {
       return (
-        <TableRow>
+        <TableRow key={index}>
           <TableCell>Data Name</TableCell>
           <TableCell>{ row[0] }</TableCell>
           <TableCell>{ row[1] }</TableCell>

@@ -5,6 +5,8 @@ import Plot from 'react-plotly.js';
 import TableWrapper from './TableWrapper';
 
 import jsonData from '../data.json';
+import SimpleTable from './SimpleTable';
+import UsersTable from './UsersTable';
 
 export default class Graph extends Component {
 
@@ -57,6 +59,8 @@ export default class Graph extends Component {
           }}
         />
         <TableWrapper data={ this.state }/>
+        <SimpleTable />
+        <UsersTable />
 
       </div>
     )
