@@ -9,10 +9,9 @@ import SimpleTable from './SimpleTable';
 import UsersTable from './UsersTable';
 
 export default class Graph extends Component {
-
   state = {
-    x:[],
-    y:[],
+    x: [],
+    y: []
   };
 
   componentDidMount() {
@@ -21,12 +20,12 @@ export default class Graph extends Component {
     const xAxis = [];
     const yAxis = [];
 
-    data.events.forEach( data => {
-        xAxis.push(data.timestamp);
-        yAxis.push(data.peak_p_max_kw);
-    })
+    data.events.forEach(data => {
+      xAxis.push(data.timestamp);
+      yAxis.push(data.peak_p_max_kw);
+    });
 
-    this.setState({ x: xAxis, y: yAxis});
+    this.setState({ x: xAxis, y: yAxis });
   }
 
   render() {
@@ -38,9 +37,17 @@ export default class Graph extends Component {
             {
               x: this.state.x,
               y: this.state.y,
-              text:['name1', 'name2', 'name3', 'name4', 'name5', 'name6', 'name7'],
-              type: 'scatter',
-            },
+              text: [
+                'name1',
+                'name2',
+                'name3',
+                'name4',
+                'name5',
+                'name6',
+                'name7'
+              ],
+              type: 'scatter'
+            }
           ]}
           layout={{
             width: '100%',
@@ -58,11 +65,10 @@ export default class Graph extends Component {
             }
           }}
         />
-        <TableWrapper data={ this.state }/>
+        <TableWrapper data={this.state} />
         <SimpleTable />
         <UsersTable />
-
       </div>
-    )
+    );
   }
 }
