@@ -112,12 +112,11 @@ class UsersTable extends React.Component {
     });
   };
 
-  handleSort = columnToSort => {
+  handleSort = columnToSort => () => {
     const newDirection = this.state.direction === 'asc' ? 'desc' : 'asc';
     this.setState({ orderBy: columnToSort });
     this.setState({ direction: newDirection }, () => {
       const newOrder = orderBy(this.state.filteredData, this.state.orderBy, this.state.direction);
-      console.log(newOrder);
       this.setState({ filteredData: newOrder });
     });
   };
@@ -147,21 +146,21 @@ class UsersTable extends React.Component {
               <SortingTableCell
                 active={this.state.orderBy === 'name'}
                 direction={direction}
-                onClick={() => this.handleSort('name')}
+                onClick={this.handleSort('name')}
               >
                 Name
               </SortingTableCell>
               <SortingTableCell
                 active={this.state.orderBy === 'email'}
                 direction={direction}
-                onClick={() => this.handleSort('email')}
+                onClick={this.handleSort('email')}
               >
                 Email
               </SortingTableCell>
               <SortingTableCell
                 active={this.state.orderBy === 'company.name'}
                 direction={direction}
-                onClick={() => this.handleSort('company.name')}
+                onClick={this.handleSort('company.name')}
               >
                 Company
               </SortingTableCell>
@@ -214,4 +213,7 @@ class UsersTable extends React.Component {
   }
 }
 
+UsersTable.propTypes = {
+  classes: PropTypes.object.isRequired
+};
 export default withStyles(styles)(UsersTable);
