@@ -5,8 +5,12 @@
   "dependencies": {
     "@material-ui/core": "^3.7.0",
     "@material-ui/icons": "^3.0.1",
+    "axios": "^0.18.0",
+    "canvas": "^2.2.0",
     "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
     "lodash": "^4.17.11",
+    "moxios": "^0.4.0",
     "plotly.js": "^1.43.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
@@ -36,6 +40,7 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.12.1"
+    "eslint-plugin-react": "^7.12.1",
+    "jest-canvas-mock": "^1.1.0"
   }
 }

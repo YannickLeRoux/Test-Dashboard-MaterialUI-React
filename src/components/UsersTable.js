@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import orderBy from 'lodash/orderBy';
+import axios from 'axios';
 import { withStyles, MuiThemeProvider } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -8,8 +9,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import Tooltip from '@material-ui/core/Tooltip';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Input from '@material-ui/core/Input';
 import SortingTableCell from './SortingTableCell';
 import {
@@ -45,18 +44,6 @@ const styles = theme => ({
   }
 });
 
-const SortTableCell = props => {
-  return (
-    <TableCell>
-      <Tooltip title="Sort" enterDelay={300}>
-        <TableSortLabel direction={props.direction} onClick={props.onClick}>
-          {props.children}
-        </TableSortLabel>
-      </Tooltip>
-    </TableCell>
-  );
-};
-
 class UsersTable extends React.Component {
   state = {
     userData: [],
@@ -77,12 +64,10 @@ class UsersTable extends React.Component {
   };
 
   fetchData = () => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(res => res.json())
-      .then(userData => {
-        this.setState({ userData });
-        this.setState({ filteredData: userData });
-      });
+    axios.get('https://jsonplaceholder.typicode.com/users').then(response => {
+      this.setState({ userData: response.data });
+      this.setState({ filteredData: response.data });
+    });
   };
 
   // filters out names not starting with C
@@ -179,14 +164,17 @@ class UsersTable extends React.Component {
             })}
           </TableBody>
           <TableFooter>
-            <TablePagination
-              rowsPerPageOptions={[2, 5, 10, 25]}
-              count={userData.length}
-              page={page}
-              rowsPerPage={rowsPerPage}
-              onChangePage={this.handleChangePage}
-              onChangeRowsPerPage={this.handleChangeRowsPerPage}
-            />
+            <TableRow>
+              <TablePagination
+                className="pagination"
+                rowsPerPageOptions={[2, 5, 10, 25]}
+                count={userData.length}
+                page={page}
+                rowsPerPage={rowsPerPage}
+                onChangePage={this.handleChangePage}
+                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+              />
+            </TableRow>
           </TableFooter>
         </Table>
         {/*<Button

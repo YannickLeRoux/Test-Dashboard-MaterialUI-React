@@ -97,14 +97,16 @@ class SimpleTable extends React.Component {
             })}
           </TableBody>
           <TableFooter>
-            <TablePagination
-              count={rows.length}
-              rowsPerPageOptions={[1, 3, 10]}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onChangePage={this.handleChangePage}
-              onChangeRowsPerPage={this.handleChangeRowsPerPage}
-            />
+            <TableRow>
+              <TablePagination
+                count={rows.length}
+                rowsPerPageOptions={[1, 3, 10]}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={this.handleChangePage}
+                onChangeRowsPerPage={this.handleChangeRowsPerPage}
+              />
+            </TableRow>
           </TableFooter>
         </Table>
       </Paper>
