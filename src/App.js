@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles } from '@material-ui/core/styles';
 
 import Sidebar from './components/Sidebar';
-import Graph from './components/Graph';
+import DataViewer from './components/DataViewer';
 
 const styles = theme => ({
   graph: {
-    backgroundColor: "#FAFAFA"
+    backgroundColor: '#FAFAFA'
   }
 });
 
@@ -23,7 +23,7 @@ class App extends Component {
             <Sidebar />
           </Grid>
           <Grid className={classes.graph} item xs={9}>
-            <Graph />
+            <DataViewer />
           </Grid>
         </Grid>
       </div>

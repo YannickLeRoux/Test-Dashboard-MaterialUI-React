@@ -1,6 +1,6 @@
 import React from 'react';
 import moxios from 'moxios';
-import { mount, shallow } from 'enzyme';
+import { mount, ReactWrapper } from 'enzyme';
 
 import UsersTable from '../UsersTable';
 
@@ -142,6 +142,8 @@ it('has a table header, body and footer', (done) => {
   moxios.wait(() => {
     component.update();
 
+    // expect(component).toMatchSnapshot();
+
     expect(component.find('table').length).toEqual(1);
     expect(component.find('thead').length).toEqual(1);
     expect(component.find('tbody').length).toEqual(1);
@@ -150,24 +152,31 @@ it('has a table header, body and footer', (done) => {
   });
 });
 
-it('can display 5 rows with default pagination 5', (done) => {
+it('makes sure the number of rows matches the pagination displayed by default', (done) => {
   moxios.wait(() => {
     component.update();
 
-    expect(component.find('tbody').find('tr').length).toEqual(5);
+    const defaultPagin = component
+      .find('td.pagination')
+      .find('input')
+      .first()
+      .props().value;
+
+    expect(component.find('tbody').find('tr').length).toEqual(defaultPagin);
     done();
   });
 });
 
-it.only('can display the 2 rows when switch to pagination 2', (done) => {
+it.skip('can display the 2 rows when switched to pagination 2', (done) => {
   moxios.wait(() => {
     component.update();
 
     console.log(
+      'test click',
       component
         .find('td.pagination')
         .find('svg')
-        .first()
+        .at(2)
         .debug()
     );
 
@@ -175,22 +184,36 @@ it.only('can display the 2 rows when switch to pagination 2', (done) => {
       .find('td.pagination')
       .find('svg')
       .first()
-      .simulate('click');
+      .simulate('click')
+      .tap(() => console.log('clicked !'));
 
-    console.log(component.find('#menu-').debug());
+    // component.update();
 
-    // console.log(component.find('.pagination').debug());
-    // console.log('target', component.find('#menu-'));
+    const portalWrapper = new ReactWrapper(component.getDOMNode());
+
+    console.log(portalWrapper.debug());
+
+    // expect(component.find('tbody').find('tr').length).toEqual(2);
 
     done();
   });
 });
 
-it('displays only one row when search for Leanne', (done) => {
+it('displays only one row when search for Leanne with correct data', (done) => {
   moxios.wait(() => {
     component.update();
     component.find('input#search-field-input').simulate('change', { target: { value: 'Leanne' } });
+
     expect(component.find('tbody').find('tr').length).toEqual(1);
+
+    expect(
+      component
+        .find('tbody')
+        .find('tr')
+        .find('td')
+        .first()
+        .text()
+    ).toEqual('Leanne Graham');
 
     done();
   });
@@ -202,6 +225,7 @@ it('displays no row when search for unknown value', (done) => {
     component
       .find('input#search-field-input')
       .simulate('change', { target: { value: 'sdfsfssgfdg' } });
+
     expect(component.find('tbody').find('tr').length).toEqual(0);
 
     done();

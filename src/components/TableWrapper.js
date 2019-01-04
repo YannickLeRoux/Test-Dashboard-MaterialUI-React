@@ -7,41 +7,49 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { withStyles } from '@material-ui/core/styles'
+import { withStyles } from '@material-ui/core/styles';
 
-import jsonData from '../data.json';
+//import jsonData from '../data.json';
 
-const styles = (theme) => ({
+const styles = theme => ({
   paper: {
     margin: 50
   }
 });
 
 class TableWrapper extends Component {
-
   state = {
+    // stores data for getderivedStatefromProps
+    data: this.props.data,
     tableData: []
   };
 
-  componentWillMount() {
-    let tableData = [];
-    const data = JSON.parse(JSON.stringify(jsonData));
+  componentDidMount() {
+    const data = this.props.data;
+    const tableData = [];
 
-    data.events.forEach( item => tableData.push([ item.timestamp, item.peak_p_max_kw ]));
+    data.events.forEach(item => tableData.push([item.timestamp, item.peak_p_max_kw]));
     this.setState({ tableData });
-    console.log('new state', this.state )
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.data !== prevState.data) {
+      const tableData = [];
+      nextProps.data.events.forEach(item => tableData.push([item.timestamp, item.peak_p_max_kw]));
+      return { tableData };
+    } else return null;
   }
 
   renderTableRows() {
-    return this.state.tableData.map( (row, index) => {
+    return this.state.tableData.map((row, index) => {
       return (
         <TableRow key={index}>
-          <TableCell>Data Name</TableCell>
-          <TableCell>{ row[0] }</TableCell>
-          <TableCell>{ row[1] }</TableCell>
+          <TableCell>Data #{index + 1}</TableCell>
+          <TableCell>{row[0] * 1000}</TableCell>
+          <TableCell>{row[1]}</TableCell>
         </TableRow>
       );
-    })
+    });
   }
 
   render() {
@@ -49,23 +57,19 @@ class TableWrapper extends Component {
     return (
       <div>
         <Paper className={classes.paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Test #</TableCell>
-              <TableCell>My X Values</TableCell>
-              <TableCell>My Y Values</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            { this.renderTableRows() }
-          </TableBody>
-        </Table>
-
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Test #</TableCell>
+                <TableCell>Time(ms)</TableCell>
+                <TableCell>Peak Power Max(kW)</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>{this.renderTableRows()}</TableBody>
+          </Table>
         </Paper>
-
       </div>
-    )
+    );
   }
 }
 
