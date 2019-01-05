@@ -8,8 +8,7 @@ export default class PlotComponent extends Component {
     y: []
   };
 
-  componentDidMount() {
-    console.log(this.props);
+  updateState() {
     const xAxis = [];
     const yAxis = [];
 
@@ -19,6 +18,16 @@ export default class PlotComponent extends Component {
     });
 
     this.setState({ x: xAxis, y: yAxis });
+  }
+
+  componentDidMount() {
+    this.updateState();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.data !== prevProps.data) {
+      this.updateState();
+    }
   }
 
   render() {

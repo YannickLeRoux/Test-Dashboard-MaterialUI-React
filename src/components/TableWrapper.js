@@ -24,7 +24,7 @@ class TableWrapper extends Component {
     tableData: []
   };
 
-  componentDidMount() {
+  updateState() {
     const data = this.props.data;
     const tableData = [];
 
@@ -32,13 +32,23 @@ class TableWrapper extends Component {
     this.setState({ tableData });
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.data !== prevState.data) {
-      const tableData = [];
-      nextProps.data.events.forEach(item => tableData.push([item.timestamp, item.peak_p_max_kw]));
-      return { tableData };
-    } else return null;
+  componentDidMount() {
+    this.updateState();
   }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.data !== prevProps.data) {
+      this.updateState();
+    }
+  }
+
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (nextProps.data !== prevState.data) {
+  //     const tableData = [];
+  //     nextProps.data.events.forEach(item => tableData.push([item.timestamp, item.peak_p_max_kw]));
+  //     return { tableData };
+  //   } else return null;
+  // }
 
   renderTableRows() {
     return this.state.tableData.map((row, index) => {
